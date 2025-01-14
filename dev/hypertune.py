@@ -84,7 +84,7 @@ def train(config: Dict):
 
 
 if __name__ == "__main__":
-    ray.init()
+    ray.init(num_cpus=4)
 
     data_dir = Path("data/raw/gestures/gestures-dataset").resolve()
     if not data_dir.exists():
