@@ -1,9 +1,9 @@
 [project]
-name = "MADS-exam-25"
+name = "RU_MADS-exam-25"
 version = "0.1.0"
 description = "Code for MADS deep learning exam"
 authors = [
-    {name = "Raoul Grouls", email = "Raoul.Grouls@han.nl"},
+    {name = "Ruben Goedings", email = "ruben.goedings@student.hu.nl"},
 ]
 dependencies = [
     "mads-datasets>=0.3.10",
