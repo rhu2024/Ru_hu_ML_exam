@@ -145,3 +145,26 @@ class Transformer(nn.Module):
         x = x.mean(dim=1)  # Global Average Pooling
         x = self.out(x)
         return x
+
+
+# Toevoeging GRU
+
+class GRU(nn.Module):
+    def __init__(self, config: dict) -> None:
+        super().__init__()
+        self.gru = nn.GRU(
+            input_size=config["input_size"],
+            hidden_size=config["hidden"],
+            num_layers=config["num_layers"],
+            batch_first=True,
+            dropout=config["dropout"] if config["num_layers"] > 1 else 0.0,
+        )
+
+        self.fc = nn.Linear(config["hidden"], config["output"])
+
+    def forward(self, x: Tensor) -> Tensor:
+        # Input shape: (batch, seq_len, input_size)
+        # GRU expects: (batch, seq_len, input_size)
+        output, _ = self.gru(x)  # We ignore the hidden states
+        output = self.fc(output[:, -1, :])  # Use the output of the last time step
+        return output
