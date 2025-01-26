@@ -160,8 +160,8 @@ if __name__ == "__main__":
     analysis = tune.run(
         train,
         config=config,
-        metric="loss",
-        mode="min",
+        metric="recall",
+        mode="max",
         progress_reporter=reporter,
         num_samples=5,
         search_alg=search,

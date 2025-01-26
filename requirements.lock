@@ -129,6 +129,8 @@ jsonschema==4.23.0
     # via ray
 jsonschema-specifications==2024.10.1
     # via jsonschema
+kaleido==0.2.1
+    # via ru-mads-exam-25
 keyring==25.6.0
     # via jrnl
     # via mads-datasets
@@ -204,6 +206,7 @@ packaging==24.2
     # via gunicorn
     # via matplotlib
     # via mlflow-skinny
+    # via plotly
     # via ray
     # via scikit-optimize
     # via tensorboard
@@ -220,6 +223,8 @@ pillow==11.1.0
     # via mads-datasets
     # via matplotlib
     # via torchvision
+plotly==5.24.1
+    # via ru-mads-exam-25
 polars==1.19.0
     # via mads-datasets
 protobuf==5.29.3
@@ -322,6 +327,8 @@ sqlparse==0.5.3
     # via mlflow-skinny
 sympy==1.13.1
     # via torch
+tenacity==9.0.0
+    # via plotly
 tensorboard==2.18.0
     # via ru-mads-exam-25
     # via torch-tb-profiler

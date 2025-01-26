@@ -242,6 +242,8 @@ jupyterlab-server==2.27.3
     # via notebook
 jupyterlab-widgets==3.0.13
     # via ipywidgets
+kaleido==0.2.1
+    # via ru-mads-exam-25
 keyring==25.6.0
     # via jrnl
     # via mads-datasets
@@ -348,6 +350,7 @@ packaging==24.2
     # via matplotlib
     # via mlflow-skinny
     # via nbconvert
+    # via plotly
     # via ray
     # via scikit-optimize
     # via tensorboard
@@ -372,6 +375,8 @@ pillow==11.1.0
     # via torchvision
 platformdirs==4.3.6
     # via jupyter-core
+plotly==5.24.1
+    # via ru-mads-exam-25
 polars==1.19.0
     # via mads-datasets
 prometheus-client==0.21.1
@@ -519,6 +524,8 @@ stack-data==0.6.3
     # via ipython
 sympy==1.13.1
     # via torch
+tenacity==9.0.0
+    # via plotly
 tensorboard==2.18.0
     # via ru-mads-exam-25
     # via torch-tb-profiler
