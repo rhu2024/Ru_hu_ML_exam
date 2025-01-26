@@ -13,12 +13,11 @@ from ray.tune import CLIReporter
 from ray.tune.schedulers import AsyncHyperBandScheduler
 from ray.tune.search.hyperopt import HyperOptSearch
 from src.datasets import HeartDataset2D
-from src.metrics import Accuracy, Recall  # Importeer metrics vanuit metrics.py
+from src.metrics import Accuracy, Recall
 from loguru import logger
 
 logger.remove()
 logger.add("logs/logfile.log", level="DEBUG")
-
 
 # ResidualBlock for 2D Convolutions
 class ResidualBlock2D(nn.Module):
@@ -46,7 +45,6 @@ class ResidualBlock2D(nn.Module):
         out = self.relu(out)
         return out
 
-
 # CNN Model using ResidualBlock2D
 class CNNModel2D(nn.Module):
     def __init__(self, config):
@@ -66,7 +64,6 @@ class CNNModel2D(nn.Module):
         x = self.fc(x)
         return x
 
-
 def train(config: Dict):
     # Gebruik het correcte pad naar de data-map
     data_dir = Path(__file__).parent.parent.resolve() / "data"  # Map buiten /dev/
@@ -77,7 +74,7 @@ def train(config: Dict):
     train_dataset = HeartDataset2D(train_path, target="target", shape=(16, 12), apply_smote=True)
     test_dataset = HeartDataset2D(test_path, target="target", shape=(16, 12))
 
-    # Gebruik 50% van de data
+    # Gebruik een percentage van de data
     train_subset_size = int(0.5 * len(train_dataset))  # 50% van de trainingsdata
     test_subset_size = int(0.5 * len(test_dataset))    # 50% van de testdata
 
@@ -135,13 +132,17 @@ def train(config: Dict):
         "accuracy": avg_accuracy
     })
 
+from pathlib import Path
 
 if __name__ == "__main__":
     ray.init(num_cpus=4)
 
+    # Gebruik een absoluut pad voor storage_path
+    storage_path = f"file://{Path('hypertuning_results').resolve()}"
+
     config = {
-        "hidden_size": tune.randint(16, 128),
-        "dropout": tune.uniform(0.0, 0.3),
+        "hidden_size": tune.randint(32, 256),
+        "dropout": tune.uniform(0.0, 0.2),
         "output_size": 5,  # Multiclass classification with 5 classes
     }
 
@@ -154,7 +155,7 @@ if __name__ == "__main__":
         time_attr="training_iteration",
         grace_period=1,
         reduction_factor=3,
-        max_t=5,
+        max_t=10,
     )
 
     analysis = tune.run(
@@ -163,13 +164,21 @@ if __name__ == "__main__":
         metric="recall",
         mode="max",
         progress_reporter=reporter,
-        num_samples=5,
+        num_samples=10,  # Aantal experimenten aangepast
         search_alg=search,
         scheduler=scheduler,
         verbose=1,
+        storage_path=storage_path,  # Gebruik absoluut pad
     )
 
-    # Print the best configuration
+    # Print de beste configuratie
     print("Best configuration:", analysis.best_config)
+
+    # Zorg ervoor dat de map bestaat zonder URI
+    Path("hypertuning_results").mkdir(parents=True, exist_ok=True)
+
+    # Sla resultaten op als CSV
+    results_df = analysis.results_df
+    results_df.to_csv("hypertuning_results/results.csv", index=False)
 
     ray.shutdown()
