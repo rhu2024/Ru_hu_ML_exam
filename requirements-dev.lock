@@ -40,6 +40,8 @@ babel==2.16.0
     # via jupyterlab-server
 backports-tarfile==1.2.0
     # via jaraco-context
+bayesian-optimization==2.0.3
+    # via ru-mads-exam-25
 beautifulsoup4==4.12.3
     # via nbconvert
 bleach==6.2.0
@@ -66,6 +68,7 @@ cloudpickle==3.1.1
     # via hyperopt
     # via mlflow-skinny
 colorama==0.4.6
+    # via bayesian-optimization
     # via jrnl
 comm==0.2.2
     # via ipykernel
@@ -186,6 +189,7 @@ jinja2==3.1.5
 joblib==1.4.2
     # via imbalanced-learn
     # via scikit-learn
+    # via scikit-optimize
 jrnl==4.2
     # via ru-mads-exam-25
 json5==0.10.0
@@ -307,6 +311,7 @@ notebook-shim==0.2.4
     # via jupyterlab
     # via notebook
 numpy==2.2.1
+    # via bayesian-optimization
     # via configspace
     # via contourpy
     # via hyperopt
@@ -317,6 +322,7 @@ numpy==2.2.1
     # via mltrainer
     # via pandas
     # via scikit-learn
+    # via scikit-optimize
     # via scipy
     # via seaborn
     # via tensorboard
@@ -343,6 +349,7 @@ packaging==24.2
     # via mlflow-skinny
     # via nbconvert
     # via ray
+    # via scikit-optimize
     # via tensorboard
     # via tensorboardx
 pandas==2.2.3
@@ -386,6 +393,8 @@ pure-eval==0.2.3
     # via stack-data
 py4j==0.10.9.8
     # via hyperopt
+pyaml==25.1.0
+    # via scikit-optimize
 pyarrow==18.1.0
     # via mlflow
     # via ray
@@ -426,6 +435,7 @@ pyxdg==0.28
 pyyaml==6.0.2
     # via jupyter-events
     # via mlflow-skinny
+    # via pyaml
     # via ray
 pyzmq==26.2.0
     # via ipykernel
@@ -465,15 +475,21 @@ ruamel-yaml-clib==0.2.12
     # via ruamel-yaml
 ruff==0.9.1
 scikit-learn==1.6.1
+    # via bayesian-optimization
     # via imbalanced-learn
     # via mlflow
+    # via scikit-optimize
     # via sklearn-compat
+scikit-optimize==0.10.2
+    # via ru-mads-exam-25
 scipy==1.15.1
+    # via bayesian-optimization
     # via configspace
     # via hyperopt
     # via imbalanced-learn
     # via mlflow
     # via scikit-learn
+    # via scikit-optimize
 seaborn==0.13.2
     # via ru-mads-exam-25
 send2trash==1.8.3
