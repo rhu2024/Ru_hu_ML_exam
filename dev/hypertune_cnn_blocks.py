@@ -146,7 +146,7 @@ if __name__ == "__main__":
     storage_path = f"file://{Path('hypertuning_results').resolve()}"
 
     config = {
-        "hidden_size": tune.randint(16, 256),
+        "hidden_size": tune.randint(16, 128),
         "dropout": tune.uniform(0.0, 0.2),
         "output_size": 5,  # Multiclass classification with 5 classes
         "num_blocks": tune.randint(1, 7),  # Kies tussen 1 en 6 blokken
@@ -177,8 +177,6 @@ if __name__ == "__main__":
         storage_path=storage_path,  # Gebruik absoluut pad
         resources_per_trial={
             "cpu": 4,  # Maximaal 4 CPU's
-            "gpu": 0,  # Geen GPU's (pas aan indien nodig)
-            "memory": 6 * 1024 * 1024 * 1024  # 6 GB RAM in bytes
         }
     )
 

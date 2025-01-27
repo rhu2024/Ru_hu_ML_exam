@@ -1,0 +1,2 @@
+loss,recall,accuracy,timestamp,checkpoint_dir_name,done,training_iteration,trial_id,date,time_this_iter_s,time_total_s,pid,hostname,node_ip,time_since_restore,iterations_since_restore
+0.1374833037765865,0.9469989537655841,0.950801749271137,1737988277,,True,1,cbd5d6c2,2025-01-27_15-31-17,227.00775694847107,227.00775694847107,6914,MacBook-Air-van-Ruben-2.local,127.0.0.1,227.00775694847107,1
