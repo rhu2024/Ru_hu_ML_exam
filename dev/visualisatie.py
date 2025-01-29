@@ -28,7 +28,7 @@ def plot_contour(df, x_col, y_col, z_col, start=0.7):
     plt.show()
 
 # Lees de CSV in
-data = pd.read_csv("/Users/rubengoedings/Documents/Ru_hu_ML_exam/hypertuning_results/results_26jan.csv")
+data = pd.read_csv("/Users/rubengoedings/Documents/Ru_hu_ML_exam/hypertuning_results/results_27jan.csv")
 
 # Roep de functie aan
 grid = data
