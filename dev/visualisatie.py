@@ -2,34 +2,42 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
+import os
 
-# Functie voor het maken van de contourplot
-def plot_contour(df, x_col, y_col, z_col, start=0.7):
-    # Filter de data
-    x = df[x_col]
-    y = df[y_col]
-    z = df[z_col]
+# Gebruik een variabele voor het bestandspad zonder hardcoded paden
+csv_file = os.path.join(os.path.expanduser("~"), "Documents", "Ru_hu_ML_exam", "hypertuning_results", "results_total.csv")
 
-    # Maak een grid
-    xi = np.linspace(x.min(), x.max(), 100)
-    yi = np.linspace(y.min(), y.max(), 100)
-    xi, yi = np.meshgrid(xi, yi)
+df = pd.read_csv(csv_file)
 
-    # Interpoleer de data naar het grid
-    zi = griddata((x, y), z, (xi, yi), method='linear')
+# Selecteer de benodigde kolommen
+x = df["config/hidden_size"]  # Hidden size (X-as)
+y = df["config/num_blocks"]  # Number of layers (Y-as)
+z = df["recall"]  # Recall als meetwaarde
 
-    # Maak de plot
-    plt.figure(figsize=(10, 8))
-    contour = plt.contourf(xi, yi, zi, levels=np.linspace(start, z.max(), 20), cmap="viridis")
-    plt.colorbar(contour, label=z_col)
-    plt.xlabel(x_col)
-    plt.ylabel(y_col)
-    plt.title(f'Contour Plot van {z_col} gebaseerd op {x_col} en {y_col}')
-    plt.show()
+# Maak een grid voor de contour plot
+xi = np.linspace(x.min(), x.max(), 100)
+yi = np.linspace(y.min(), y.max(), 100)
+X, Y = np.meshgrid(xi, yi)
+Z = griddata((x, y), z, (X, Y), method='cubic')
 
-# Lees de CSV in
-data = pd.read_csv("/Users/rubengoedings/Documents/Ru_hu_ML_exam/hypertuning_results/results_27jan.csv")
+# Plot de contouren
+plt.figure(figsize=(12, 5))
+plt.contourf(X, Y, Z, levels=20, cmap="plasma")
+cbar = plt.colorbar()
+cbar.set_label("Recall")
 
-# Roep de functie aan
-grid = data
-plot_contour(grid, "config/hidden_size", "config/dropout", "accuracy", start=0.7)
+# Voeg contourlijnen en waarden toe
+contours = plt.contour(X, Y, Z, levels=10, colors='black', linewidths=0.5)
+plt.clabel(contours, inline=True, fontsize=8)
+
+# Voeg de originele meetpunten toe
+plt.scatter(x, y, color='black')
+
+# Labels en titel
+plt.xlabel("Hidden Size")
+plt.ylabel("Number of Layers")
+plt.title("Contour Plot of Recall")
+plt.show()
+
+
+
