@@ -46,3 +46,6 @@ plt.savefig(output_file, dpi=300, bbox_inches='tight')
 plt.close()
 
 print(f"Contour plot opgeslagen als: {output_file}")
+
+
+

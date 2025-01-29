@@ -101,7 +101,7 @@ def train(config: Dict):
     loss_fn = nn.CrossEntropyLoss()
 
     # Training loop
-    for epoch in range(5):
+    for epoch in range(3):
         model.train()
         for X_batch, y_batch in tqdm(train_loader, desc=f"Epoch {epoch+1} Training", leave=False):
             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
@@ -140,7 +140,7 @@ if __name__ == "__main__":
     ray.init(num_cpus=4)
 
     config = {
-        "hidden_size": tune.randint(16, 128),
+        "hidden_size": tune.randint(16, 80),
         "dropout": tune.uniform(0.0, 0.3),
         "output_size": 5,  # Multiclass classification with 5 classes
     }

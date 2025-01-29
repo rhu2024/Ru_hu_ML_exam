@@ -82,8 +82,8 @@ def train(config: Dict):
     test_dataset = HeartDataset2D(test_path, target="target", shape=(16, 12))
 
     # Gebruik een percentage van de data
-    train_subset_size = int(0.2 * len(train_dataset))  # 50% van de trainingsdata
-    test_subset_size = int(0.2 * len(test_dataset))    # 50% van de testdata
+    train_subset_size = int(0.5 * len(train_dataset))  # 50% van de trainingsdata
+    test_subset_size = int(0.5 * len(test_dataset))    # 50% van de testdata
 
     train_indices = np.random.choice(len(train_dataset), train_subset_size, replace=False)
     test_indices = np.random.choice(len(test_dataset), test_subset_size, replace=False)
@@ -105,7 +105,7 @@ def train(config: Dict):
     loss_fn = nn.CrossEntropyLoss()
 
     # Training loop
-    for epoch in range(1):
+    for epoch in range(5):
         model.train()
         for X_batch, y_batch in tqdm(train_loader, desc=f"Epoch {epoch+1} Training", leave=False):
             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
@@ -146,10 +146,10 @@ if __name__ == "__main__":
     storage_path = f"file://{Path('hypertuning_results').resolve()}"
 
     config = {
-        "hidden_size": tune.randint(128, 225),
+        "hidden_size": tune.randint(16, 128),
         "dropout": tune.uniform(0.1, 0.2),
         "output_size": 5,  # Multiclass classification with 5 classes
-        "num_blocks": tune.randint(4, 7),  # Kies tussen 1 en 6 blokken
+        "num_blocks": tune.randint(1, 5),  
     }
 
     reporter = CLIReporter()
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         metric="recall",
         mode="max",
         progress_reporter=reporter,
-        num_samples=2,  # Aantal experimenten aangepast
+        num_samples=5,  # Aantal experimenten aangepast
         search_alg=search,
         scheduler=scheduler,
         verbose=1,
