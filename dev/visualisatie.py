@@ -4,9 +4,12 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import griddata
 import os
 
-# Gebruik een variabele voor het bestandspad zonder hardcoded paden
-csv_file = os.path.join(os.path.expanduser("~"), "Documents", "Ru_hu_ML_exam", "hypertuning_results", "results_total.csv")
+# Bepaal het bestandspad dynamisch
+base_dir = os.path.join(os.path.expanduser("~"), "Documents", "Ru_hu_ML_exam", "hypertuning_results")
+csv_file = os.path.join(base_dir, "results_total.csv")
+output_file = os.path.join(base_dir, "contour_plot.png")
 
+# Lees de data in
 df = pd.read_csv(csv_file)
 
 # Selecteer de benodigde kolommen
@@ -15,29 +18,31 @@ y = df["config/num_blocks"]  # Number of layers (Y-as)
 z = df["recall"]  # Recall als meetwaarde
 
 # Maak een grid voor de contour plot
-xi = np.linspace(x.min(), x.max(), 100)
-yi = np.linspace(y.min(), y.max(), 100)
+xi = np.linspace(x.min(), x.max(), 200)
+yi = np.linspace(y.min(), y.max(), 200)
 X, Y = np.meshgrid(xi, yi)
 Z = griddata((x, y), z, (X, Y), method='cubic')
 
 # Plot de contouren
 plt.figure(figsize=(12, 5))
-plt.contourf(X, Y, Z, levels=20, cmap="plasma")
+contour = plt.contourf(X, Y, Z, levels=50, cmap="plasma", alpha=0.9)
 cbar = plt.colorbar()
 cbar.set_label("Recall")
 
 # Voeg contourlijnen en waarden toe
-contours = plt.contour(X, Y, Z, levels=10, colors='black', linewidths=0.5)
-plt.clabel(contours, inline=True, fontsize=8)
+contours = plt.contour(X, Y, Z, levels=25, colors='black', linewidths=0.7)
+plt.clabel(contours, inline=True, fontsize=8, fmt="%.2f")
 
 # Voeg de originele meetpunten toe
-plt.scatter(x, y, color='black')
+plt.scatter(x, y, color='black', edgecolors='black', s=25)
 
 # Labels en titel
 plt.xlabel("Hidden Size")
 plt.ylabel("Number of Layers")
-plt.title("Contour Plot of Recall")
-plt.show()
+plt.title("Contour Plot of Recall with Enhanced Detail")
 
+# Opslaan als PNG
+plt.savefig(output_file, dpi=300, bbox_inches='tight')
+plt.close()
 
-
+print(f"Contour plot opgeslagen als: {output_file}")
