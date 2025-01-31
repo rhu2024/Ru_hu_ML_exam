@@ -40,6 +40,7 @@ plt.scatter(x, y, color='black', edgecolors='black', s=20)
 plt.xlabel("Hidden Size")
 plt.ylabel("Number of Layers")
 plt.title("Contour Plot of Recall with Enhanced Detail")
+plt.yticks(np.arange(y.min(), y.max() + 1, 1))
 
 # Opslaan als PNG
 plt.savefig(output_file, dpi=300, bbox_inches='tight')
