@@ -1,0 +1,6 @@
+{
+  "dropout": 0.15887986928252756,
+  "hidden_size": 30,
+  "num_blocks": 2,
+  "output_size": 5
+}

@@ -1,0 +1,2 @@
+loss,recall,accuracy,timestamp,checkpoint_dir_name,done,training_iteration,trial_id,date,time_this_iter_s,time_total_s,pid,hostname,node_ip,time_since_restore,iterations_since_restore
+0.1145294944946275,0.9488620123696724,0.9628038323889054,1738262496,,True,1,3b0facca,2025-01-30_19-41-36,333.30198216438293,333.30198216438293,42341,Mac.home,127.0.0.1,333.30198216438293,1

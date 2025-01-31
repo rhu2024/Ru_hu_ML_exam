@@ -18,8 +18,8 @@ y = df["config/num_blocks"]  # Number of layers (Y-as)
 z = df["recall"]  # Recall als meetwaarde
 
 # Maak een grid voor de contour plot
-xi = np.linspace(x.min(), x.max(), 200)
-yi = np.linspace(y.min(), y.max(), 200)
+xi = np.linspace(x.min(), x.max(), 250)
+yi = np.linspace(y.min(), y.max(), 250)
 X, Y = np.meshgrid(xi, yi)
 Z = griddata((x, y), z, (X, Y), method='cubic')
 
@@ -30,11 +30,11 @@ cbar = plt.colorbar()
 cbar.set_label("Recall")
 
 # Voeg contourlijnen en waarden toe
-contours = plt.contour(X, Y, Z, levels=25, colors='black', linewidths=0.7)
+contours = plt.contour(X, Y, Z, levels=20, colors='black', linewidths=0.7)
 plt.clabel(contours, inline=True, fontsize=8, fmt="%.2f")
 
 # Voeg de originele meetpunten toe
-plt.scatter(x, y, color='black', edgecolors='black', s=25)
+plt.scatter(x, y, color='black', edgecolors='black', s=20)
 
 # Labels en titel
 plt.xlabel("Hidden Size")
